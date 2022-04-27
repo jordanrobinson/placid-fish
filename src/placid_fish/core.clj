@@ -3,6 +3,5 @@
 
 (defn absolute?
   [path]
-  (cond
-    (nil? path) nil
-    :else (ef/absolute? path)))
+  (try (ef/absolute? path)
+       (catch Exception _ false)))

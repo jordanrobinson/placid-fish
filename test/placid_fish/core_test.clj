@@ -7,4 +7,8 @@
     (testing "with valid data"
       (is (absolute? "https://example.com")))
     (testing "with nil"
-      (is (= nil (absolute? nil))))))
+      (is (false? (absolute? nil))))
+    (testing "with other data types"
+      (is (false? (absolute? 123)))
+      (is (false? (absolute? [])))
+      (is (false? (absolute? {}))))))
