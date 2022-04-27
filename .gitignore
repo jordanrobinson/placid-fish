@@ -1,14 +1,34 @@
-pom.xml
-pom.xml.asc
-*.jar
-*.class
-/lib/
-/classes/
+# vim
+*.swp
+*.swo
+
+# IntelliJ
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# Build
+/vendor/
+/build/
 /target/
-/checkouts/
-.lein-deps-sum
-.lein-repl-history
-.lein-plugins/
-.lein-failures
+dist/
+.clj-kondo/.cache
+
+# OS
+.DS_Store
+
+# Temporary
+run/pids/
+run/logs/
+*.log
+.tmp
+.rakeTasks
+
+# Terraform
+.terraform
 .nrepl-port
-.cpcache/
+
+# Leiningen
+.lein-repl-history
+.lein-env
