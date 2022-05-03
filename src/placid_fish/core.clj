@@ -1,7 +1,13 @@
 (ns placid-fish.core
-  (:require [org.bovinegenius.exploding-fish :as ef]))
+  (:require [org.bovinegenius.exploding-fish :as ef]
+            [clojure.string :as str]))
 
 (defn absolute?
-  [path]
-  (try (ef/absolute? path)
-       (catch Exception _ false)))
+  [uri]
+  (try (ef/absolute? uri)
+       (catch Exception _)))
+
+(defn ends-with?
+  [^CharSequence s ^String substr]
+  (try (str/ends-with? s substr)
+       (catch Exception _)))
