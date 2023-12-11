@@ -1,10 +1,52 @@
-(defproject placid-fish "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
-  :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
-            :url "https://www.eclipse.org/legal/epl-2.0/"}
-  :dependencies [[org.clojure/clojure "1.10.0"]
+(def version
+  (or (System/getenv "VERSION")
+      "2.0.0"))
+
+(defproject ai.mypulse/placid-fish version
+  :description "Safe url assertions for test classes that uses Exploding Fish under the hood"
+  :url "https://github.com/Global-Online-Health/placid-fish"
+
+  :license {:name "The MIT License"
+            :url "https://opensource.org/licenses/MIT"}
+
+  :dependencies [[org.clojure/clojure "1.11.1"]
                  [org.bovinegenius/exploding-fish "0.3.6"]]
-  :main ^:skip-aot placid-fish.core
-  :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+
+  :plugins [[lein-cloverage "1.2.3"]
+            [lein-shell "0.5.0"]
+            [lein-ancient "0.7.0"]
+            [lein-changelog "0.3.2"]
+            [lein-eftest "0.5.9"]
+            [lein-codox "0.10.8"]
+            [lein-kibit "0.1.8"]
+            [lein-bikeshed "0.5.2"]]
+
+  :profiles
+  {:shared {:dependencies
+            [[org.clojure/clojure "1.11.1"]
+             [eftest "0.5.9"]]}
+   :dev [:shared {:source-paths ["dev"]
+                  :eftest {:multithread? false}}]
+   :test [:shared {:eftest {:multithread? false}}]
+
+   :prerelease
+   {:release-tasks
+    [["shell" "git" "diff" "--exit-code"]
+     ["change" "version" "leiningen.release/bump-version" "rc"]
+     ["change" "version" "leiningen.release/bump-version" "release"]
+     ["vcs" "commit" "Pre-release version %s [skip ci]"]
+     ["vcs" "tag"]
+     ["deploy"]]}
+   :release
+   {:release-tasks
+    [["deploy"]]}}
+
+  :target-path "target/%s/"
+
+  :bikeshed {:max-line-length 120}
+
+  :deploy-repositories
+  {"releases" {:url "https://repo.clojars.org"
+               :username :env/clojars_deploy_username
+               :password :env/clojars_deploy_token
+               :sign-releases false}})
