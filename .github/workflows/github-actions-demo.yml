@@ -17,7 +17,7 @@ jobs:
 
       - name: publish
         env:
-          VERSION: ${{ github.run_number }}
+          VERSION: 2.0.${{ github.run_number }}
           CLOJARS_USER: ${{ secrets.CLOJARS_USER }}
           CLOJARS_PASS: ${{ secrets.CLOJARS_TOKEN }}
         run: ${{ github.workspace }}/go library:publish:release
