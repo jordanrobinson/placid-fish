@@ -8,6 +8,15 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: ruby/setup-ruby@ec02537da5712d66d4d50a0f33b7eb52773b5ed1
-      - run: ${{ github.workspace }}/go library:check
-      - run: ${{ github.workspace }}/go library:test:unit
-      - run: ${{ github.workspace }}/go library:publish:release
+
+      - name: build
+        run: ${{ github.workspace }}/go library:check
+
+      - name: test
+        run: ${{ github.workspace }}/go library:test:unit
+
+      - name: publish
+        env:
+          CLOJARS_USER: ${{ secrets.CLOJARS_USER }}
+          CLOJARS_PASS: ${{ secrets.CLOJARS_TOKEN }}
+        run: ${{ github.workspace }}/go library:publish:release
